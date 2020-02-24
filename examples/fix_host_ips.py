@@ -8,17 +8,16 @@ and fixes it if required.
 
 import socket
 from pyzabbix import ZabbixAPI, ZabbixAPIException
+from getpass import getpass
+
 
 # The hostname at which the Zabbix web interface is available
-ZABBIX_SERVER = 'https://zabbix.example.com'
+ZABBIX_SERVER = 'https://console.schools.mtm.apps.det.nsw.edu.au/zabbix'
 
 zapi = ZabbixAPI(ZABBIX_SERVER)
 
-# Disable SSL certificate verification
-zapi.session.verify = False
-
 # Login to the Zabbix API
-zapi.login('Admin', 'zabbix')
+zapi.login(input('Zabbix Username: '), getpass('Zabbix Password: '))
 
 # Loop through all hosts interfaces, getting only "main" interfaces of type "agent"
 for h in zapi.hostinterface.get(output=["dns", "ip", "useip"], selectHosts=["host"], filter={"main": 1, "type": 1}):

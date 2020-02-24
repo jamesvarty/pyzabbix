@@ -1,16 +1,16 @@
 """
 Shows a list of all current issues (AKA tripped triggers)
 """
-
+from getpass import getpass
 from pyzabbix import ZabbixAPI
 
 # The hostname at which the Zabbix web interface is available
-ZABBIX_SERVER = 'https://zabbix.example.com'
+ZABBIX_SERVER = 'https://console.mtm.apps.det.nsw.edu.au/zabbix'
 
 zapi = ZabbixAPI(ZABBIX_SERVER)
 
 # Login to the Zabbix API
-zapi.login('api_username', 'api_password')
+zapi.login(input('Zabbix Username: '), getpass('Zabbix Password: '))
 
 # Get a list of all issues (AKA tripped triggers)
 triggers = zapi.trigger.get(only_true=1,
